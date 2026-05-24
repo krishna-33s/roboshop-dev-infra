@@ -7,18 +7,31 @@ variable "env"{
 }
 
 variable "sg_names"{
-    [
+    type = list
+    default= [
+        #database
         "Mongodb",
         "Redis",
         "Mysql",
         "Rabbitmq",
+
+        #backend
         "Catalogue",
         "User",
         "Cart",
-        "Shipping"
+        "Shipping",
         "Payment",
+
+        #backend ALB
         "Backend_ALB",
+
+        #frontend
         "Frontend",
-        "Frontend_ALB"
+
+        #frontend ALB
+        "Frontend_ALB",
+
+        #bastion
+        "Bastion"
     ]
 }
