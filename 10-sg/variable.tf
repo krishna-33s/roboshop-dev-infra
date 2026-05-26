@@ -10,28 +10,28 @@ variable "sg_names"{
     type = list
     default= [
         #database
-        "Mongodb",
-        "Redis",
-        "Mysql",
-        "Rabbitmq",
+        "mongodb",
+        "redis",
+        "mysql",
+        "rabbitmq",
 
         #backend
-        "Catalogue",
-        "User",
-        "Cart",
-        "Shipping",
-        "Payment",
+        "catalogue",
+        "user",
+        "cart",
+        "shipping",
+        "payment",
 
         #backend ALB
-        "Backend_ALB",
+        "backend_ALB",
 
         #frontend
-        "Frontend",
+        "frontend",
 
         #frontend ALB
-        "Frontend_ALB",
+        "frontend_ALB",
 
         #bastion
-        "Bastion"
+        "bastion"
     ]
 }
