@@ -42,7 +42,7 @@ resource "aws_iam_role" "BastionDev" {
 # Attach Policy
 resource "aws_iam_role_policy_attachment" "Bastion" {
   role       = aws_iam_role.BastionDev.name
-  policy_arn = arn:aws:iam::aws:policy/AdministratorAccess
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
 # Instance Profile
