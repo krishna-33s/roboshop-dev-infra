@@ -7,7 +7,7 @@ resource "aws_instance" "example" {
   user_data=file("bastion.sh")
 
   root_block_device {
-   
+  
     volume_size = 50
     volume_type = "gp3"
     
