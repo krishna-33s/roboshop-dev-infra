@@ -17,3 +17,8 @@
   port : 27017
   src : user
   dest : mongodb      
+
+- name : bastion_redis  
+  port : 6379
+  src : bastion
+  dest : redis
