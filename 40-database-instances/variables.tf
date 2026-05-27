@@ -11,5 +11,5 @@ variable "zone_id"{
 }
 
 variable "domain_name"{
-    default = "krishna-dev.space"
+    default = "krishnadev.space"
 }
