@@ -5,7 +5,7 @@ resource "aws_instance" "mongodb" {
   vpc_security_group_ids = [local.mongodb_sg_id]
 
   tags = merge(
-    { Name = "bastion-${var.project}-${var.env}" },
+    { Name = "mongodb-${var.project}-${var.env}" },
     local.common_tags
   )
 }
