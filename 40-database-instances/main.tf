@@ -16,16 +16,17 @@ resource "terraform_data" "bootstrap" {
     aws_instance.mongodb.id
   ]
   
-  provisioner "file" {
-    source      = "bootstrap.sh"
-    destination = "/tmp/bootstrap.sh"
-  }
 
   connection {
     type     = "ssh"
     user     = "ec2-user"
     password = "DevOps321"
     host     = aws_instance.mongodb.private_ip
+  }
+
+  provisioner "file" {
+    source      = "bootstrap.sh"
+    destination = "/tmp/bootstrap.sh"
   }
 
   provisioner "remote-exec" {
