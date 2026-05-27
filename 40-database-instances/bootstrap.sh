@@ -6,4 +6,4 @@ cd /home/ec2-user
 git clone https://github.com/krishna-33s/ansible-roles-terraform.git
 
 cd ansible-roles-terraform
-ansible-playbook -i module=$module roboshop.yml
+ansible-playbook -e module=$module roboshop.yml
