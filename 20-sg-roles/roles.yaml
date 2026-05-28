@@ -22,3 +22,13 @@
   port : 6379
   src : bastion
   dest : redis
+
+- name : bastion_mysql
+  port : 3306
+  src : bastion
+  dest : mysql
+
+- name : bastion_rabbitmq
+  port : 5672
+  src : bastion
+  dest : rabbitmq    
