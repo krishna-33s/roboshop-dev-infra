@@ -33,7 +33,7 @@ resource "aws_iam_policy" "policy" {
 }
 
 # attach policy to the IAM Role
-resource "aws_iam_policy_attachment" "test-attach" {
+resource "aws_iam_policy_attachment" "mysql" {
   roles      = [aws_iam_role.mysql.name]
   policy_arn = aws_iam_policy.policy.arn
 }
