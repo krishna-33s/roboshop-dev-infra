@@ -8,6 +8,11 @@ locals {
         [for i in ["database", "${var.project}", "${var.env}", "mysql"]: title(i)])
     mysql_policy = join("",
         [for i in ["database", "${var.project}", "${var.env}", "mysql"]: title(i)])
+    rabbitmq_sg_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
+    rabbitmq_role = join("-",
+        [for i in ["database", "${var.project}", "${var.env}", "rabbitmq"]: title(i)])
+    rabbitmq_policy = join("",
+        [for i in ["database", "${var.project}", "${var.env}", "rabbitmq"]: title(i)])
 
     common_tags = {
         Project = var.project
