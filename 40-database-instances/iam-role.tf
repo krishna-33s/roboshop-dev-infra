@@ -27,7 +27,7 @@ resource "aws_iam_role" "mysql" {
 }
 
 # create policy by copying the file of "mysql-policy.json" file
-resource "aws_iam_policy" "policy" {
+resource "aws_iam_policy" "mysql" {
   name        = local.mysql_policy
   description = "A test policy"
   policy      = templatefile("mysql-policy.json", 
@@ -77,7 +77,7 @@ resource "aws_iam_role" "rabbitmq" {
 }
 
 # create policy by copying the file of "rabbitmq-policy.json" file
-resource "aws_iam_policy" "policy" {
+resource "aws_iam_policy" "rabbitmq" {
   name        = local.rabbitmq_policy
   description = "A test policy"
   policy      = templatefile("rabbitmq-policy.json", 
