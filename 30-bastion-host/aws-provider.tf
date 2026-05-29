@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "krishna-dev-88s"
-    key    = "dev.databases"
+    key    = "dev-bastionhost"
     region = "us-east-1"
     use_lockfile = true
     encrypt = true
