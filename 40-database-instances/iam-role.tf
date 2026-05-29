@@ -38,7 +38,7 @@ resource "aws_iam_policy" "mysql" {
 resource "aws_iam_policy_attachment" "mysql" {
   name = "mysql_policy_attachment"
   roles      = [aws_iam_role.mysql.name]
-  policy_arn = aws_iam_policy.policy.arn
+  policy_arn = aws_iam_policy.mysql.arn
 }
 
 # instance profile 
@@ -88,7 +88,7 @@ resource "aws_iam_policy" "rabbitmq" {
 resource "aws_iam_policy_attachment" "rabbitmq" {
   name = "rabbitmq_policy_attachment"
   roles      = [aws_iam_role.rabbitmq.name]
-  policy_arn = aws_iam_policy.policy.arn
+  policy_arn = aws_iam_policy.rabbitmq.arn
 }
 
 # instance profile 
