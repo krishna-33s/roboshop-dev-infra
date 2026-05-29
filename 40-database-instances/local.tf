@@ -4,9 +4,9 @@ locals {
     mongodb_sg_id = data.aws_ssm_parameter.mongodb_sg_id.value
     redis_sg_id = data.aws_ssm_parameter.redis_sg_id.value
     mysql_sg_id = data.aws_ssm_parameter.mysql_sg_id.value
-    mysql_role = join( "-"
+    mysql_role = join("-"
         [for i in ["databse", "${var.project}", "${var.env}", "mysql"]: title(i)])
-    mysql_policy = join( ""
+    mysql_policy = join(""
         [for i in ["databse", "${var.project}", "${var.env}", "mysql"]: title(i)])
 
     common_tags = {
