@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "mongodb_user" {
   security_group_id = local.mongodb_sg_id
 }
 
-resource "aws_security_group_rule" "backend_alb_bastion" {
+resource "aws_security_group_rule" "backend_ALB_bastion" {
   type              = "ingress"
   from_port         = 80
   to_port           = 80
