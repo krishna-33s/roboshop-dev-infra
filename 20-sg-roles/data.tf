@@ -34,3 +34,7 @@ data "aws_ssm_parameter" "user_sg_id" {
   name = "/${var.project}/${var.env}/user_sg_id"
 }
 
+data "aws_ssm_parameter" "backend_ALB_sg_id" {
+  name = "/${var.project}/${var.env}/backend_ALB_sg_id"
+}
+
