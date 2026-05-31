@@ -3,7 +3,7 @@ resource "aws_lb" "backend_alb" {
   name               = "backend-alb-${var.project}-${var.env}"
   internal           = true
   load_balancer_type = "application"
-  security_groups    = local.backend_alb_sg_id
+  security_groups    = [local.backend_alb_sg_id]
   subnets            = local.private_subnet_id
 
   # true means we can't delete load balancer with terrraform
