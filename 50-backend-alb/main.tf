@@ -29,7 +29,7 @@ resource "aws_lb_listener" "http" {
     fixed_response {
       content_type = "text/plain"
       message_body = "<h3> hii this backend-alb listener with http:80 port.this server is fine</h3>"
-      status_code  = "200-299"
+      status_code  = "200"
     }
   }
 }
