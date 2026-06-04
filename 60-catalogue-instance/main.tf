@@ -156,3 +156,46 @@ resource "aws_autoscaling_group" "catalogue" {
     delete = "15m"
   }
 }
+
+# autoscaling policy
+resource "aws_autoscaling_policy" "catalogue" {
+  autoscaling_group_name = "aws_autoscaling_group.catalogue.name"
+  name                   = "catalogue-${var.project}-${var.env}"
+  policy_type            = "TargetTrackingScaling"
+  estimated_instance_warmup = 120
+
+  target_tracking_configuration {
+    predefined_load_metric_specification {
+        predefined_metric_type = "ASGTotalCPUUtilization"
+
+    }
+  }
+}  
+
+# this alb is listener is depends on targetgroup
+resource "aws_lb_listener" "catalogue" {
+  load_balancer_arn = local.aws_lb_listener
+  priority = 10
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.catalogue.arn
+
+  condition {
+    host_header {
+      values = ["catalogue.backend-alb-${var.env}.${var.domain_name}"]
+    }
+  }
+}
+
+# delete the instance
+resource "terraform_data" "delete_instance" {
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+  depends_on = [aws_autoscaling_policy.catalogue]
+
+  provisioner "local-exec" {
+    inline = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
+  }
+}
