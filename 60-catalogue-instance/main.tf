@@ -62,7 +62,7 @@ resource "aws_lb_target_group" "catalogue" {
   port     = 8080
   protocol = "HTTP"
   vpc_id   = local.vpc_id
-  target_type = "instances"
+  target_type = "instance"
   protocol_version = "HTTP1"
   deregistration_delay = 70
 
@@ -165,7 +165,7 @@ resource "aws_autoscaling_policy" "catalogue" {
   estimated_instance_warmup = 120
 
   target_tracking_configuration {
-    predefined_load_metric_specification {
+    predefined_metric_specification {
         predefined_metric_type = "ASGTotalCPUUtilization"
     }
 
