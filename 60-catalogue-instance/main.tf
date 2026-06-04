@@ -175,13 +175,13 @@ resource "aws_autoscaling_policy" "catalogue" {
 
 # this alb is listener is depends on targetgroup
 resource "aws_lb_listener_rule" "catalogue" {
-  load_balancer_arn = local.aws_lb_listener
-  priority = 10
+  listener_arn = local.aws_lb_listener_arn
+  priority     = 10
 
-  default_action {
+  action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.catalogue.arn
-  }  
+  }
 
   condition {
     host_header {
@@ -189,7 +189,6 @@ resource "aws_lb_listener_rule" "catalogue" {
     }
   }
 }
-
 
 # delete the instance
 resource "terraform_data" "delete_instance" {
