@@ -186,6 +186,7 @@ resource "aws_lb_listener" "catalogue" {
       values = ["catalogue.backend-alb-${var.env}.${var.domain_name}"]
     }
   }
+ }
 }
 
 # delete the instance
