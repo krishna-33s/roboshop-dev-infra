@@ -178,7 +178,7 @@ resource "aws_lb_listener" "catalogue" {
   load_balancer_arn = local.aws_lb_listener
   priority = 10
 
-  default_action {
+  action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.catalogue.arn
   }  
