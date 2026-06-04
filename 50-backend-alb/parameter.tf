@@ -1,5 +1,5 @@
 resource "aws_ssm_parameter" "aws_lb_listener_arn" {
   name  = "/${var.project}/${var.env}/aws_lb_listener_arn"
   type  = "String"
-  value = module.aws_lb_listener.http.arn
+  value = aws_lb_listener.http.arn
 }
