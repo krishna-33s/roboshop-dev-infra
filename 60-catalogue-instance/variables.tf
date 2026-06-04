@@ -5,3 +5,7 @@ variable "project"{
 variable "env"{
     default = "dev"
 }
+
+variable "app_version"{
+    default = "v3"
+}

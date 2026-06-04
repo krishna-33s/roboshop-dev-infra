@@ -18,6 +18,9 @@ data "aws_ami" "redhat" {
     }
 }
 
+data "aws_ssm_parameter" "vpc_id" {
+  name = "/${var.project}/${var.env}/vpc_id"
+}
 
 data "aws_ssm_parameter" "catalogue_sg_id" {
   name = "/${var.project}/${var.env}/catalogue_sg_id"
