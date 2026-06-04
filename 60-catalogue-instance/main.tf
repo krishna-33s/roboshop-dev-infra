@@ -66,7 +66,7 @@ resource "aws_lb_target_group" "catalogue" {
   protocol_version = "HTTP1"
   deregistration_delay = 70
 
-  health_checks {
+  health_check {
     protocol = "HTTP"
     port = 8080
     path = "/health"
@@ -125,7 +125,7 @@ resource "aws_autoscaling_group" "catalogue" {
   desired_capacity          = 2
   force_delete              = false
   vpc_zone_identifier       = [local.private_subnet_id]
-  target_group_arns = [aws_lb_target_group.ctatalogue.arn]
+  target_group_arns = [aws_lb_target_group.catalogue.arn]
   launch_template {
     id      = aws_launch_template.catalogue.id
     version = "$Latest"
@@ -167,8 +167,9 @@ resource "aws_autoscaling_policy" "catalogue" {
   target_tracking_configuration {
     predefined_load_metric_specification {
         predefined_metric_type = "ASGTotalCPUUtilization"
-
     }
+
+    target_value = 70.0
   }
 }  
 
