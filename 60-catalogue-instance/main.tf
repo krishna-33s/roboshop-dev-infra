@@ -159,7 +159,7 @@ resource "aws_autoscaling_group" "catalogue" {
 
 # autoscaling policy
 resource "aws_autoscaling_policy" "catalogue" {
-  autoscaling_group_name = "aws_autoscaling_group.catalogue.name"
+  autoscaling_group_name = aws_autoscaling_group.catalogue.name
   name                   = "catalogue-${var.project}-${var.env}"
   policy_type            = "TargetTrackingScaling"
   estimated_instance_warmup = 120
