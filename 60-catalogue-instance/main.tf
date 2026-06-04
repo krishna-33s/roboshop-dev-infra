@@ -174,11 +174,11 @@ resource "aws_autoscaling_policy" "catalogue" {
 }  
 
 # this alb is listener is depends on targetgroup
-resource "aws_lb_listener" "catalogue" {
+resource "aws_lb_listener_rule" "catalogue" {
   load_balancer_arn = local.aws_lb_listener
   priority = 10
 
-  action {
+  default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.catalogue.arn
   }  
