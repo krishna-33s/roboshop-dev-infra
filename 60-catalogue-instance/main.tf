@@ -181,14 +181,15 @@ resource "aws_lb_listener" "catalogue" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.catalogue.arn
+  }  
 
   condition {
     host_header {
       values = ["catalogue.backend-alb-${var.env}.${var.domain_name}"]
     }
   }
- }
 }
+
 
 # delete the instance
 resource "terraform_data" "delete_instance" {
@@ -198,6 +199,6 @@ resource "terraform_data" "delete_instance" {
   depends_on = [aws_autoscaling_policy.catalogue]
 
   provisioner "local-exec" {
-    inline = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
   }
 }
