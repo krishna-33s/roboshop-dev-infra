@@ -81,7 +81,7 @@ resource "aws_lb_target_group" "catalogue" {
 # create launch template with that ami
 resource "aws_launch_template" "catalogue" {
   name = "catalogue-${var.project}-${var.env}"
-  image_id = "aws_ami_from_instance.catalogue.id"
+  image_id = aws_ami_from_instance.catalogue.id
 
   # if it is having less traffic then autoscaling will terminate the instances
   instance_initiated_shutdown_behavior = "terminate"
@@ -166,7 +166,7 @@ resource "aws_autoscaling_policy" "catalogue" {
 
   target_tracking_configuration {
     predefined_metric_specification {
-        predefined_metric_type = "ASGTotalCPUUtilization"
+        predefined_metric_type = "ASGAverageCPUUtilization"
     }
 
     target_value = 70.0
