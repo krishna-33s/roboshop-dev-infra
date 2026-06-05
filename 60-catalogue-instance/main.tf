@@ -37,3 +37,168 @@ resource "terraform_data" "catalogue_bootstrap" {
   }
 }
 
+
+# stop the instance
+resource "aws_ec2_instance_state" "catalogue" {
+  instance_id = aws_instance.catalogue.id
+  state       = "stopped"
+  depends_on = [aws_instance.catalogue]
+}
+
+# take the ami
+resource "aws_ami_from_instance" "catalogue" {
+  name               = "catalogue-${var.project}-${var.env}"
+  source_instance_id = aws_instance.catalogue.id
+  depends_on = [aws_ec2_instance_state.catalogue]
+
+  tags = merge(
+    { Name = "catalogue-${var.project}-${var.env}" },
+    local.common_tags
+  )
+}
+
+# create target group
+resource "aws_lb_target_group" "catalogue" {
+  name     = "catalogue-${var.project}-${var.env}"
+  port     = 8080
+  protocol = "HTTP"
+  vpc_id   = local.vpc_id
+  target_type = "instance"
+  protocol_version = "HTTP1"
+  deregistration_delay = 70
+
+  health_check {
+    protocol = "HTTP"
+    port = 8080
+    path = "/health"
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 3
+    interval = 20
+    matcher = "200-299"
+  }
+}
+
+# create launch template with that ami
+resource "aws_launch_template" "catalogue" {
+  name = "catalogue-${var.project}-${var.env}"
+  image_id = aws_ami_from_instance.catalogue.id
+
+  # if it is having less traffic then autoscaling will terminate the instances
+  instance_initiated_shutdown_behavior = "terminate"
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [local.catalogue_sg_id]
+
+  update_default_version = true
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = merge(
+        { Name = "catalogue-${var.project}-${var.env}" },
+        local.common_tags
+        )
+    }
+
+    tag_specifications {
+        resource_type = "volume"
+
+        tags = merge(
+            { Name = "catalogue-${var.project}-${var.env}" },
+            local.common_tags
+            )
+        }
+
+    tags = merge(
+        { Name = "catalogue-${var.project}-${var.env}" },
+        local.common_tags
+        )    
+
+}
+
+# auto scaling
+resource "aws_autoscaling_group" "catalogue" {
+  name                      = "catalogue-${var.project}-${var.env}"
+  max_size                  = 4
+  min_size                  = 2
+  health_check_grace_period = 120
+  health_check_type         = "ELB"
+  desired_capacity          = 2
+  force_delete              = false
+  vpc_zone_identifier       = [local.private_subnet_id]
+  target_group_arns = [aws_lb_target_group.catalogue.arn]
+  launch_template {
+    id      = aws_launch_template.catalogue.id
+    version = "$Latest"
+  }
+  
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 60
+    }
+    triggers = ["launch_template"]
+  }
+
+  dynamic "tag" {
+  for_each =merge(
+    { Name = "catalogue-${var.project}-${var.env}" },
+    local.common_tags
+    )
+  
+  content {
+    key                 = tag.key
+    value               = tag.value
+    propagate_at_launch = true
+    }
+  }
+
+  timeouts {
+    delete = "15m"
+  }
+}
+
+# autoscaling policy
+resource "aws_autoscaling_policy" "catalogue" {
+  autoscaling_group_name = aws_autoscaling_group.catalogue.name
+  name                   = "catalogue-${var.project}-${var.env}"
+  policy_type            = "TargetTrackingScaling"
+  estimated_instance_warmup = 120
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+        predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+
+    target_value = 70.0
+  }
+}  
+
+# this alb is listener is depends on targetgroup
+resource "aws_lb_listener_rule" "catalogue" {
+  listener_arn = local.aws_lb_listener_arn
+  priority     = 10
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.catalogue.arn
+  }
+
+  condition {
+    host_header {
+      values = ["catalogue.backend-alb-${var.env}.${var.domain_name}"]
+    }
+  }
+}
+
+# delete the instance
+resource "terraform_data" "delete_instance" {
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+  depends_on = [aws_autoscaling_policy.catalogue]
+
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
+  }
+}
