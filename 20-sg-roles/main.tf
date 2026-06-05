@@ -79,6 +79,15 @@ resource "aws_security_group_rule" "backend_ALB_bastion" {
   security_group_id = local.backend_ALB_sg_id
 }
 
+# catalogue accepting bastion
+resource "aws_security_group_rule" "catalogue_bastion" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  source_security_group_id = local.bastion_sg_id
+  security_group_id = local.catalogue_sg_id
+}
 
 # catalogue accepting backend_ALB
 resource "aws_security_group_rule" "catalogue_backend_ALB" {
