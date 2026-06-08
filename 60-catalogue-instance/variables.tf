@@ -7,7 +7,7 @@ variable "env"{
 }
 
 variable "app_version"{
-    default ="v3"
+    default = "v3"
 }
 
 variable "domain_name"{
