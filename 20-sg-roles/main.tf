@@ -99,5 +99,15 @@ resource "aws_security_group_rule" "catalogue_backend_ALB" {
   security_group_id = local.catalogue_sg_id
 }
 
+#frontend_ALB accepting from user
+resource "aws_security_group_rule" "frontend_ALB_user" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = local.frontend_ALB_sg_id
+}
+
 
 

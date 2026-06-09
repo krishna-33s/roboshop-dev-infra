@@ -38,3 +38,7 @@ data "aws_ssm_parameter" "backend_ALB_sg_id" {
   name = "/${var.project}/${var.env}/backend_ALB_sg_id"
 }
 
+data "aws_ssm_parameter" "frontend_ALB_sg_id" {
+  name = "/${var.project}/${var.env}/frontend_ALB_sg_id"
+}
+
