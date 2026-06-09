@@ -89,15 +89,6 @@ resource "aws_security_group_rule" "catalogue_bastion" {
   security_group_id = local.catalogue_sg_id
 }
 
-# resource "aws_security_group_rule" "catalogue_ssh" {
-#   type              = "ingress"
-#   from_port         = 22
-#   to_port           = 22
-#   protocol          = "tcp"
-#   security_group_id = local.catalogue_sg_id
-#   cidr_blocks       = ["0.0.0.0/0"]
-# }
-
 # catalogue accepting backend_ALB
 resource "aws_security_group_rule" "catalogue_backend_ALB" {
   type              = "ingress"
