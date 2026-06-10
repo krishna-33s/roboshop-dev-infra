@@ -188,7 +188,7 @@ resource "aws_autoscaling_policy" "catalogue" {
 
 # this alb is listener is depends on targetgroup
 resource "aws_lb_listener_rule" "catalogue" {
-  listener_arn = local.aws_lb_listener_arn
+  listener_arn = local.backend_lb_listener_arn
   priority     = 10
 
   action {

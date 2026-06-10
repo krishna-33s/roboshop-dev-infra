@@ -30,6 +30,6 @@ data "aws_ssm_parameter" "private_subnet_id" {
   name = "/${var.project}/${var.env}/private_subnet_id"
 }
 
-data "aws_ssm_parameter" "aws_lb_listener_arn" {
-  name = "/${var.project}/${var.env}/aws_lb_listener_arn"
+data "aws_ssm_parameter" "backend_lb_listener_arn" {
+  name = "/${var.project}/${var.env}/backend_lb_listener_arn"
 }
