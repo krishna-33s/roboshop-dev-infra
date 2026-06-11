@@ -45,7 +45,7 @@ resource "aws_route53_record" "www" {
 
   alias {
     name                   = aws_lb.frontend_alb.dns_name
-    zone_id                = var.zone_id
+    zone_id                = aws_lb.frontend_alb.zone_id
     evaluate_target_health = true
   }
 }
