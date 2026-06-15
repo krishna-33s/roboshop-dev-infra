@@ -1,7 +1,7 @@
 # Application Load Balancer
 resource "aws_lb" "frontend_alb" {
   name               = "frontend-alb-${var.project}-${var.env}"
-  internal           = true
+  internal           = false
   load_balancer_type = "application"
   security_groups    = [local.frontend_ALB_sg_id]
   subnets            = local.public_subnet_id
