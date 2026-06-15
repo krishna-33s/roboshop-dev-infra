@@ -45,4 +45,5 @@ resource "aws_route53_record" "www" {
     zone_id                = aws_lb.backend_alb.zone_id
     evaluate_target_health = true
   }
+  allow_overwrite = true
 }
