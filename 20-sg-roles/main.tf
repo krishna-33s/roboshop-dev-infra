@@ -314,7 +314,7 @@ resource "aws_security_group_rule" "openvpn_public" {
 
 
 #openvpn accepting 943 port
-resource "aws_security_group_rule" "openvpn_public" {
+resource "aws_security_group_rule" "openvpn_943" {
   type              = "ingress"
   from_port         = 943
   to_port           = 943
