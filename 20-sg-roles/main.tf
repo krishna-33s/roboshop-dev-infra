@@ -302,5 +302,37 @@ resource "aws_security_group_rule" "frontend_ALB_public" {
   security_group_id = local.frontend_ALB_sg_id
 }
 
+#openvpn accepting 443 port
+resource "aws_security_group_rule" "openvpn_public" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = local.openvpn_sg_id
+}
+
+
+#openvpn accepting 943 port
+resource "aws_security_group_rule" "openvpn_public" {
+  type              = "ingress"
+  from_port         = 943
+  to_port           = 943
+  protocol          = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = local.openvpn_sg_id
+}
+
+#openvpn accepting backendALB
+resource "aws_security_group_rule" "openvpn_sg_backend_ALB" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  source_security_group_id = local.backend_ALB_sg_id
+  security_group_id = local.openvpn_sg_id
+}
+
+
 
 
