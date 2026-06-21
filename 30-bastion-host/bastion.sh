@@ -14,7 +14,7 @@ sudo yum -y install terraform
 cd /home/ec2-user
 git clone https://github.com/krishna-33s/roboshop-dev-infra.git
 chown ec2-user:ec2-user -R roboshop-dev-infra
-cd roboshop-infra-dev/40-database-instances
+cd roboshop-dev-infra/40-database-instances
 terraform init
 terraform apply -auto-approve
 
@@ -22,6 +22,6 @@ terraform apply -auto-approve
 cd /home/ec2-user
 git clone https://github.com/krishna-33s/roboshop-dev-infra.git
 chown ec2-user:ec2-user -R roboshop-dev-infra
-cd roboshop-infra-dev/90-components
+cd roboshop-dev-infra/90-components
 terraform init
 terraform apply -auto-approve
