@@ -17,7 +17,6 @@ resource "terraform_data" "mongodb_bootstrap" {
     aws_instance.mongodb.id
   ]
   
-
   connection {
     type     = "ssh"
     user     = "ec2-user"
@@ -59,7 +58,6 @@ resource "terraform_data" "redis_bootstrap" {
     aws_instance.redis.id
   ]
   
-
   connection {
     type     = "ssh"
     user     = "ec2-user"
@@ -101,7 +99,6 @@ resource "terraform_data" "mysql_bootstrap" {
     aws_instance.mysql.id
   ]
   
-
   connection {
     type     = "ssh"
     user     = "ec2-user"
@@ -143,7 +140,6 @@ resource "terraform_data" "rabbitmq_bootstrap" {
     aws_instance.rabbitmq.id
   ]
   
-
   connection {
     type     = "ssh"
     user     = "ec2-user"
